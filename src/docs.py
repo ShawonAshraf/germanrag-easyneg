@@ -27,8 +27,7 @@ class EasyNegativeFinder:
         return chunks
 
     def init_vector_store(self, texts: List[str]):
-        chunks = self.__chunk_text(texts)
-        store = Chroma.from_texts(chunks, self.embedding_model,
+        store = Chroma.from_texts(texts, self.embedding_model,
                                   persist_directory=self.store_persist_path)
         self.vector_store = store
 
