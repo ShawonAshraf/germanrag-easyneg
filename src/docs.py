@@ -1,8 +1,8 @@
 from langchain_community.vectorstores import Chroma
-from langchain.text_splitter import CharacterTextSplitter
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from typing import List, Any
 import torch
+from loguru import logger
 
 
 class EasyNegativeFinder:
@@ -12,24 +12,24 @@ class EasyNegativeFinder:
         self.store_persist_path = store_persist_path
 
         self.embedding_model = self.__load_embedding_model()
-        self.text_splitter = CharacterTextSplitter()
         self.vector_store = None
 
     def __load_embedding_model(self):
+        logger.info(f"Initialising Embeddings with model ::{self.embedding_model_name}")
         hf_embedding = HuggingFaceEmbeddings(
             model_name=self.embedding_model_name,
             model_kwargs={'device': self.device}
         )
+        logger.success("Done")
         return hf_embedding
 
-    def __chunk_text(self, texts: List[str]) -> Any:
-        chunks = [self.text_splitter.split_text(t) for t in texts]
-        return chunks
-
     def init_vector_store(self, texts: List[str]):
+        logger.info("Populating Vector Store")
+        logger.info(f"Persisted @ :: {self.store_persist_path}")
         store = Chroma.from_texts(texts, self.embedding_model,
                                   persist_directory=self.store_persist_path)
         self.vector_store = store
+        logger.success("Done")
 
     def find_easy_negs_for(self, data_instance: Any):
         reference = data_instance["answer"]

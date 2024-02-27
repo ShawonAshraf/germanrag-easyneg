@@ -4,7 +4,6 @@ from loguru import logger
 from datasets import load_dataset
 from tqdm.auto import trange, tqdm
 
-
 # create args for model name and persist path
 parser = argparse.ArgumentParser()
 parser.add_argument("--model", type=str,
@@ -22,13 +21,11 @@ if __name__ == "__main__":
 
     logger.info("Creating Finder Object")
     finder = EasyNegativeFinder(args.model, args.device, args.dpath)
-    logger.success("Done")
 
     # load dataset
     logger.info(f"Loading dataset :: {DATASET_NAME}")
     # this dataset has only a train split
     dataset = load_dataset(DATASET_NAME, split="train")
-    logger.success("Done")
 
     # find all unique contexts to init the vector store
     logger.info("Loading all unique contexts")
@@ -39,10 +36,7 @@ if __name__ == "__main__":
     logger.success(f"Found {len(unique_contexts)} unique contexts")
 
     # init vector store
-    logger.info("Initialising the vector store")
     finder.init_vector_store(list(unique_contexts))
-    logger.success("Done")
-
 
     # create easy negatives for five instances
     for idx in trange(5):
@@ -53,4 +47,3 @@ if __name__ == "__main__":
         print(f"Answer : {data_instance['answer']}")
         print(f"Easy Negative : {en}")
         print()
-
