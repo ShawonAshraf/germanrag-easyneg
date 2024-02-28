@@ -47,6 +47,10 @@ Ideally one would save the prepared dataset on disk but this is a small dataset 
 
 Check the `ft_config.yml` file.
 
+## One thing about the dataset ...
+
+The Hugginface page for the dataset mentions that the negatives were selected randomly from a set of unique hard negatives. I think the authors missed an opportunity here to sample based on similarity and negative sampling. (Just my two cents!).
+
 ## Env Setup
 
 ```bash
