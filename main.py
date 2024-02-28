@@ -3,6 +3,7 @@ from src.docs import EasyNegativeFinder
 from loguru import logger
 from datasets import load_dataset
 from tqdm.auto import trange, tqdm
+from src.dataset import prepare_entire_dataset
 
 # create args for model name and persist path
 parser = argparse.ArgumentParser()
@@ -38,12 +39,6 @@ if __name__ == "__main__":
     # init vector store
     finder.init_vector_store(list(unique_contexts))
 
-    # create easy negatives for five instances
-    for idx in trange(5):
-        data_instance = dataset[0]
-        en = finder.find_easy_negs_for(data_instance)
-        print("Current Instance ::")
-        print(f"Question : {data_instance['question']}")
-        print(f"Answer : {data_instance['answer']}")
-        print(f"Easy Negative : {en}")
-        print()
+    # process dataset using the easy neg finder
+    prepared_dataset = prepare_entire_dataset(dataset, finder)
+    logger.info(f"Size of the prepared dataset : {len(prepared_dataset)}")
