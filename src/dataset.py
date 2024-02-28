@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from typing import Any, List
 from loguru import logger
-from docs import EasyNegativeFinder
+from src.docs import EasyNegativeFinder
 from tqdm.auto import tqdm
 
 
