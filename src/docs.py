@@ -23,6 +23,11 @@ class EasyNegativeFinder:
         logger.success("Done")
         return hf_embedding
 
+    # would've been nicer if langchain had a way
+    # to uses a persisted vector store
+    # the api has nothing on it, but perhaps can be done manually
+    # with chroma api
+    # TODO: for future
     def init_vector_store(self, texts: List[str]):
         logger.info("Populating Vector Store")
         logger.info(f"Persisted @ :: {self.store_persist_path}")
