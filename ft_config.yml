@@ -1,0 +1,10 @@
+datasets:
+  -path: DiscoResearch/germanrag
+  type:
+    system_prompt: "Beantworten Sie die Frage mit dem angegebenen Kontext."
+    field_system: system
+    field_context: context
+    field_question: question
+    field_answer: answer
+    format: "[INST] system: {context}, question: {question}, answer: {answer} [/INST]"
+
